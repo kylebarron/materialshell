@@ -12,7 +12,12 @@ PROMPT='$(_user_host)${_current_dir}$(git_prompt_info)
 PROMPT2='%{$grey%}◀%{$reset_color%} '
 RPROMPT='$(_vi_status)%{$(echotc UP 1)%}$(git_remote_status) $(git_prompt_short_sha) ${_return_status} %{$white%}%T%{$(echotc DO 1)%}%{$reset_color%}'
 
-local _current_dir="%{$green%}%0~%{$reset_color%} "
+# orig:
+# local _current_dir="%{$green%}%0~%{$reset_color%} "
+# from https://github.com/robbyrussell/oh-my-zsh/pull/5262
+local _current_dir="%{$green%}$(shrink_path -f)%{$reset_color%} "
+# My other attempt:
+# local _current_dir="%{$green%}${${:-/${(j:/:)${(M)${(s:/:)${(D)PWD:h}}#(|.)[^.]}}/${PWD:t}}//\/~/\~}%{$reset_color%} "
 local _return_status="%{$red%}%(?..×)%{$reset_color%}"
 
 function _user_host() {
@@ -48,5 +53,8 @@ ZSH_THEME_GIT_PROMPT_SHA_AFTER="%{$reset_color%}]"
 
 # LS colors, made with http://geoff.greer.fm/lscolors/
 export LSCOLORS="exfxcxdxbxegedabagacad"
-export LS_COLORS='di=34;40:ln=35;40:so=32;40:pi=33;40:ex=31;40:bd=34;46:cd=34;43:su=0;41:sg=0;46:tw=0;42:ow=0;43:'
+# original:
+#export LS_COLORS='di=34;40:ln=35;40:so=32;40:pi=33;40:ex=31;40:bd=34;46:cd=34;43:su=0;41:sg=0;46:tw=0;42:ow=0;43:'
+# To take off black background:
+export LS_COLORS='di=34:ln=35:so=32:pi=33:ex=31:bd=34;46:cd=34;43:su=0;41:sg=0;46:tw=0;42:ow=0;43:'
 export GREP_COLOR='1;33'
